@@ -1,0 +1,81 @@
+<?php
+    $title = $model->subject->ime;
+    $subject_id = $model->subject->id;
+    $this->headTitle($title);
+?>
+<div class="jumbotron">
+    <h1 class="zf-green"><?php echo $this->escapeHtml($title) ?></h1>
+    
+	<div class="subject-info">
+    	<div class="sifra">
+    		Šifra:
+    		<strong><?php echo $model->subject->sifra ?></strong>
+    	</div>
+    	<div class="profesor">
+    		Profesor:
+    		<strong><?php echo $model->subject->profesor ?></strong>
+    	</div>
+	</div>
+</div>
+<h3>Spisak studenata na predmetu</h3>
+<table class="table" id="mainTable">
+	<thead>
+		<tr>
+			<th>Sifra indeksa</th>
+			<th>Student</th>
+			<th>Kolokvijum 1</th>
+			<th>Kolokvijum 2</th>
+			<th>Pismeni</th>
+			<th>Usmeni</th>
+			<th>Poeni bez usmenog</th>
+			<th>Poeni ukupno</th>
+			<th>Ocena</th>
+			<th>Akcija</th>
+		</tr>
+	</thead>
+	<?php if(isset($model->students) && count($model->students) > 0):?>
+	<tbody>
+	<?php foreach($model->students as $student): ?>
+		<tr>
+			<td>
+				<a href="<?php echo $this->url('studenti', ['action' => 'editWithModel', 'id' => $student['id']]) ?>">
+				<?php echo $student['broj_indeksa'] ?></a>
+			</td>
+			<td><?php echo $student['puno_ime'] ?></td>
+			<td><?php echo $student['kolokvijum_1_poeni'] ?></td>
+			<td><?php echo $student['kolokvijum_2_poeni'] ?></td>
+			<td><?php echo $student['pismeni_poeni'] ?></td>
+			<td><?php echo $student['usmeni_poeni'] ?></td>
+			<td><?php echo $student['poeni_ukupno_do_usmenog'] ?></td>
+			<td><?php echo $student['poeni_zbir'] ?></td>
+			<td><?php echo $student['ocena'] ?></td>
+			<td><a class="btn btn-success" href="<?php echo $this->url('kursevi', ['action' => 'edit', 'studentId' => $student['id'], 'subjectId' => $subject_id]) ?>">Pogledaj</a>
+			
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+	<?php endif;?>
+</table>
+<script>
+    $(document).ready(function(){
+        $('#mainTable').DataTable();
+        $('.tablesorter').tablesorter({
+             theme: 'metro-dark',
+             showProcessing: true,
+             headerTemplate : '{content} {icon}',
+             widgets: [ 'columns', 'stickyHeaders', 'scroller' ],
+             widgetOptions : {
+                     scroller_height : 400,
+                     // scroll tbody to top after sorting
+                     scroller_upAfterSort: true,
+                     // pop table header into view while scrolling up the page
+                     scroller_jumpToHeader: true,
+                     // In tablesorter v2.19.0 the scroll bar width is auto-detected
+                     // add a value here to override the auto-detected setting
+                     scroller_barWidth : null
+                     // scroll_idPrefix was removed in v2.18.0
+                     // scroller_idPrefix : 's_'
+             }
+         });
+     });
+ </script>

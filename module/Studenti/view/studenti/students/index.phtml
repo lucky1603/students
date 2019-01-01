@@ -1,0 +1,89 @@
+<?php
+$title = "Spisak studenata";
+$this->headtitle($title);
+$count = $students->count();
+?>
+
+<h1><?php echo $this->escapehtml($title) ?></h1>
+
+<?php if($count == 0): ?>
+<p>Još uvek nema unesenih studenata. Da li biste možda uneli jednog ili više njih?</p>
+<?php else: ?>
+<table class="table table-striped table-bordered" id="studentsTable">
+	<thead>
+		<tr>
+			<th>Student</th>
+			<th>Broj indeksa</th>
+			<th>E-Mail</th>
+			<th>Slika</th>
+			<th>Akcija</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach($students as $student): ?>
+	<tr>
+		<td><?php echo $student->ime ?> <?php echo $student->prezime ?></td>
+		<td><?php echo $student->broj_indeksa ?></td>
+		<td><?php echo $student->email ?></td>
+		<td><img src="<?php echo $student->image ?>" width="100" height="auto" /></td>
+		<td><a href="<?php echo $this->url('studenti', ['action' => 'editWithModel', 'id' => $student->id]) ?>">Promeni</a> | 
+		<a id="delete" href="<?php echo $this->url('studenti', ['action' => 'delete', 'id' => $student->id]) ?>">Izbrisi</a></td>
+	</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+<?php endif; ?>
+<p><a class="btn btn-primary" href="<?php echo $this->url('studenti', ['action' => 'addWithModel'])?>">Dodaj novog studenta</a></p>
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Brisanje studenta</h4>
+			</div>
+			<div class="modal-body">
+				<p>Student će biti potpuno obrisan iz baze, bez mogućnosti povratka podataka. Da li ste sigurni?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-confirm" data-dismiss="modal">Yes</button>
+				<button type="button" class="btn btn-cancel" data-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#studentsTable').DataTable();
+    	$('a#delete').on('click', function(e) {
+                e.preventDefault();
+                path = $(e.target).attr('href');
+                //console.log(path);
+                $('#myModal').modal('show');
+            });
+    
+    	$('.btn-confirm').on('click', function(e) {        
+                //alert(path);
+                window.location.href = path;
+            });
+    	$('.tablesorter').tablesorter({
+            theme: 'metro-dark',
+            showProcessing: true,
+            headerTemplate : '{content} {icon}',
+            widgets: [ 'columns', 'stickyHeaders', 'scroller' ],
+            widgetOptions : {
+                    scroller_height : 400,
+                    // scroll tbody to top after sorting
+                    scroller_upAfterSort: true,
+                    // pop table header into view while scrolling up the page
+                    scroller_jumpToHeader: true,
+                    // In tablesorter v2.19.0 the scroll bar width is auto-detected
+                    // add a value here to override the auto-detected setting
+                    scroller_barWidth : null
+                    // scroll_idPrefix was removed in v2.18.0
+                    // scroller_idPrefix : 's_'
+            }
+        });
+    });
+</script>

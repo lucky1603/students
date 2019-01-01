@@ -1,0 +1,125 @@
+<?php
+$title = "Dodaj novog studenta";
+$this->headtitle($title);
+?>
+
+<h1><?php echo $this->escapehtml($title) ?></h1>
+
+<?php 
+    $ime = $form->get('ime');
+    $ime->setAttribute('class', 'form-control');
+    $ime->setAttribute('placeholder', 'Ime ...');
+    
+    $prezime = $form->get('prezime');
+    $prezime->setAttribute('class', 'form-control');
+    $prezime->setAttribute('placeholder', 'Prezime ...');
+    
+    $broj_indeksa = $form->get('broj_indeksa');
+    $broj_indeksa->setAttribute('class', 'form-control');
+    $broj_indeksa->setAttribute('placeholder', 'Broj indeksa ...');
+    
+    $email = $form->get('email');
+    $email->setAttribute('class', 'form-control');
+    $email->setAttribute('placeholder', 'Email ...');
+    
+    $image = $form->get('image');
+    $image->setAttribute('class', 'form-control');
+    $image->setAttribute('id', 'imgUpload');
+    
+    $submit = $form->get('submit');
+    $submit->setAttribute('class', 'btn btn-primary');
+    
+    if($id != NULL)
+        $form->setAttribute('action', $this->url('studenti', ['action' => 'edit', 'id' => $id]));
+    else 
+        $form->setAttribute('action', $this->url('studenti', ['action' => 'add']));
+    
+    $form->prepare();
+    
+    echo $this->form()->openTag($form);
+    echo $this->formHidden($form->get('id'));
+?>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($ime) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($ime);?>
+        <?php echo $this->formElementErrors()->render($ime, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($prezime) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($prezime);?>
+        <?php echo $this->formElementErrors()->render($prezime, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($broj_indeksa) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($broj_indeksa);?>
+        <?php echo $this->formElementErrors()->render($broj_indeksa, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($email) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($email);?>
+        <?php echo $this->formElementErrors()->render($email, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($image) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($image);?>
+        <?php echo $this->formElementErrors()->render($image, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <div class="col-xs-2 control-label"></div>
+    <div class='col-xs-4'>
+    <?php if(isset($photo) && $photo != ""):?>
+        <img id="imageupload" src="<?php echo $photo ?>" alt="uploaded image preview" width="100%" height="auto" />
+    <?php else: ?>
+    	<img id="imageupload" alt="uploaded image preview" width="100%" height="auto" />
+    <?php endif; ?>
+    </div>
+</div>
+
+
+
+<?php 
+    echo $this->formSubmit($submit);
+?>
+<a href="<?php echo $this->url('predmeti')?>" class="btn btn-default" style="margin-left: 20px">Nazad</a>
+<?php 
+    echo $this->form()->closeTag();    
+?>
+
+<script>
+$(function() {	
+	$('#imgUpload').change(function(evt) {
+		console.log('changed');
+
+		if($('input#imgUpload')[0].files[0]) {
+			var filerdr = new FileReader();
+			filerdr.onload = function(e) {
+		        $('#imageupload').attr('src', e.target.result);
+			}
+			
+		    filerdr.readAsDataURL($('input#imgUpload')[0].files[0]);		        
+		}
+	});	
+});
+
+$(document).ready(function() {
+	console.log('ready!!!');
+});
+
+</script>
+

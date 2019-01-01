@@ -1,0 +1,204 @@
+<?php
+$title = "Dodaj novog studenta";
+$this->headtitle($title);
+$courses = $model->kursevi;
+?>
+
+<h3><?php echo $this->escapehtml($title) ?></h3>
+
+<?php 
+
+    $ime = $form->get('ime');
+    $ime->setAttribute('class', 'form-control');
+    $ime->setAttribute('placeholder', 'Ime ...');
+    
+    $prezime = $form->get('prezime');
+    $prezime->setAttribute('class', 'form-control');
+    $prezime->setAttribute('placeholder', 'Prezime ...');
+    
+    $broj_indeksa = $form->get('broj_indeksa');
+    $broj_indeksa->setAttribute('class', 'form-control');
+    $broj_indeksa->setAttribute('placeholder', 'Broj indeksa ...');
+    
+    $email = $form->get('email');
+    $email->setAttribute('class', 'form-control');
+    $email->setAttribute('placeholder', 'Email ...');
+    
+    $photo = $form->get('photo');
+    $photo->setAttribute('class', 'form-control');
+    $photo->setAttribute('id', 'imgUpload');
+    
+    $submit = $form->get('submit');
+    $submit->setAttribute('class', 'btn btn-primary');
+    
+    if(isset($id))
+        $form->setAttribute('action', $this->url('studenti', ['action' => 'editWithModel', 'id' => $id]));
+    else 
+        $form->setAttribute('action', $this->url('studenti', ['action' => 'addWithModel']));
+    
+    $form->prepare();
+    
+    echo $this->form()->openTag($form);
+    echo $this->formHidden($form->get('id'));
+?>
+
+<div id="tabs">
+	<ul>
+            <li><a href="#tab1">Licni podaci</a></li>
+            <li><a href="#tab2">Upisani kursevi</a></li>
+	</ul>
+	<div id="tab1">
+    	<div class='form-group'>
+            <?php echo $this->formLabel($ime) ?>
+            <div class='col-xs-4'>
+                <?php echo $this->formElement($ime);?>
+                <?php echo $this->formElementErrors()->render($ime, ['class' => 'help-block']) ?>
+            </div>
+        </div>
+        
+        <div class='form-group'>
+            <?php echo $this->formLabel($prezime) ?>
+            <div class='col-xs-4'>
+                <?php echo $this->formElement($prezime);?>
+                <?php echo $this->formElementErrors()->render($prezime, ['class' => 'help-block']) ?>
+            </div>
+        </div>
+        
+        <div class='form-group'>
+            <?php echo $this->formLabel($broj_indeksa) ?>
+            <div class='col-xs-4'>
+                <?php echo $this->formElement($broj_indeksa);?>
+                <?php echo $this->formElementErrors()->render($broj_indeksa, ['class' => 'help-block']) ?>
+            </div>
+        </div>
+        
+        <div class='form-group'>
+            <?php echo $this->formLabel($email) ?>
+            <div class='col-xs-4'>
+                <?php echo $this->formElement($email);?>
+                <?php echo $this->formElementErrors()->render($email, ['class' => 'help-block']) ?>
+            </div>
+        </div>
+        
+        <div class='form-group'>
+            <?php echo $this->formLabel($photo) ?>
+            <div class='col-xs-4'>
+                <?php echo $this->formElement($photo);?>
+                <?php echo $this->formElementErrors()->render($photo, ['class' => 'help-block']) ?>
+            </div>
+        </div>
+        
+        <div class='form-group'>
+            <div class="col-xs-2 control-label"></div>
+            <div class='col-xs-4'>
+            <?php if(isset($photo) && $photo != ""):?>
+                <img id="imageupload" src="<?php echo $model->student->image ?>" alt="uploaded image preview" width="100%" height="auto" />
+            <?php else: ?>
+            	<img id="imageupload" alt="uploaded image preview" width="100%" height="auto" />
+            <?php endif; ?>
+            </div>
+        </div>
+	</div>
+	<div id="tab2">
+		<?php if(count($courses) > 0): ?>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sifra predmeta</th>
+                                <th>Predmet</th>
+                                <th>Predmetni profesor</th>
+                                <th>Akcija</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $counter = 1 ?>
+                            <?php foreach($courses as $course): ?>
+                                <tr>
+                                    <td><?= $course->sifraPredmeta ?></td>
+                                    <td><?php echo $course->imePredmeta ?></td>
+                                    <td><?php echo $course->imeProfesora ?></td>
+                                    <td><a href="<?php echo $this->url('studenti', ['action' => 'editCourse', 'id' => $counter ])?>" class="btn btn-default">Promeni podatke</a></td>
+                                </tr>
+                                <?php $counter ++; ?>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+		<?php else:?>
+			<p>Trenutno nema predmeta na kojima je student upisan.</p>
+		<?php endif; ?>
+		<a id="new" href="<?= $this->url("studenti", ["action" => "addCourse"])?>" class="btn btn-default">Dodati novi predmet</a>
+	</div>
+</div>
+<div class="jumbotron">
+<?php 
+    echo $this->formSubmit($submit);
+?>
+<a href="<?php echo $this->url('studenti')?>" class="btn btn-default" style="margin-left: 20px">Nazad</a>
+</div>
+<?php 
+    echo $this->form()->closeTag();    
+?>
+
+<script>
+$(function() {	
+    $('#imgUpload').change(function(evt) {
+        console.log('changed');
+        var simage = $('#imgUpload').serialize();
+        console.log(simage);
+
+        if($('input#imgUpload')[0].files[0]) {
+            var filerdr = new FileReader();
+
+            filerdr.onload = function(e) {
+                $('#imageupload').attr('src', e.target.result);
+            }
+
+            filerdr.readAsDataURL($('input#imgUpload')[0].files[0]);	
+
+        }
+    });	
+});
+
+$(document).ready(function() {
+    $('#tabs').tabs();
+    $('a#new').on('click', function(e) {
+        e.preventDefault();
+        var element = e.target;
+        var href = $(element).attr('href');       
+        var decision = <?= json_encode(isset($id)) ?>;
+        console.log('Decision is ' + decision);
+        if($('input#imgUpload').val() != '') {
+            var formData = new FormData($('form')[0]);
+            console.log(formData);      
+            
+            $.ajax({
+                url: '/ajax/rememberStudentModel',
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    console.log(data)
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        } else {
+            var imeSlike = $('#imageupload').attr('src');
+            var additionalData = new Array();
+            var imageData = Array();
+            imageData['name'] = 'image';
+            imageData['value'] = imeSlike;
+            additionalData.push(imageData);            
+            var formData = $.param($('form').serializeArray().concat(additionalData));
+            console.log(formData);
+            
+            $.post('/ajax/rememberStudentModel', formData, function(data) {
+                console.log(data);
+            });
+        }
+            
+        window.location.href = href;
+    });
+});
+
+</script>
