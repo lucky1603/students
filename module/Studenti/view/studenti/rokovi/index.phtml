@@ -1,0 +1,96 @@
+<?php
+$title = "Spisak ispitnih rokova za školsku godinu 2018/2019";
+$this->headTitle($title);
+$count = $rokovi->count();
+?>
+
+<h1><?php echo $this->escapehtml($title) ?></h1>
+
+<?php if($count == 0): ?>
+<p>Još uvek nema unesenih ispitnih rokova. Da li biste možda uneli jednog ili više njih?</p>
+<?php else: ?>
+<table class="table table-striped" id="mainTable">
+	<thead>
+		<tr class="success">
+			<th>Naziv</th>
+			<th>Opis</th>
+			<th>Školska godina</th>
+			<th>Počinje</th>
+			<th>Završava se</th>
+			<th>Akcija</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach($rokovi as $rok): ?>
+	<tr>
+		<td><?php echo $rok->Name ?></td>
+		<td><?php echo $rok->Description ?></td>
+		<td><?php echo $rok->Year ?></td>
+		<td><?php echo $rok->DateBeginning ?></td>
+		<td><?php echo $rok->DateEnding ?></td>
+		
+		
+		<td><a href="<?php echo $this->url('rokovi', ['action' => 'edit', 'id' => $rok->Id]) ?>">Promeni</a> | 
+		<a id="delete" href="<?php echo $this->url('rokovi', ['action' => 'delete', 'id' => $rok->Id]) ?>">Obriši</a></td>
+	</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
+<?php endif; ?>
+<p><a class="btn btn-primary" href="<?php echo $this->url('rokovi', ['action' => 'add'])?>">Dodaj novi rok >>></a></p>
+
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">Brisanje korisnika</h4>
+			</div>
+			<div class="modal-body">
+				<p>Ispitni rok će biti potpuno obrisan iz baze, bez mogućnosti povratka podataka. Da li ste sigurni?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-confirm" data-dismiss="modal">Yes</button>
+				<button type="button" class="btn btn-cancel" data-dismiss="modal">No</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function() {
+	$('#mainTable').DataTable();
+	$('a#delete').on('click', function(e) {
+        e.preventDefault();
+        path = $(e.target).attr('href');
+        //console.log(path);
+        $('#myModal').modal('show');
+    });
+
+	$('.btn-confirm').on('click', function(e) {        
+        //alert(path);
+        window.location.href = path;
+    });
+
+	$('.tablesorter').tablesorter({
+        theme: 'metro-dark',
+        showProcessing: true,
+        headerTemplate : '{content} {icon}',
+        widgets: [ 'columns', 'stickyHeaders', 'scroller' ],
+        widgetOptions : {
+                scroller_height : 400,
+                // scroll tbody to top after sorting
+                scroller_upAfterSort: true,
+                // pop table header into view while scrolling up the page
+                scroller_jumpToHeader: true,
+                // In tablesorter v2.19.0 the scroll bar width is auto-detected
+                // add a value here to override the auto-detected setting
+                scroller_barWidth : null
+                // scroll_idPrefix was removed in v2.18.0
+                // scroller_idPrefix : 's_'
+        }
+    });
+});
+</script>

@@ -1,0 +1,75 @@
+<h1><?php echo $this->escapehtml("Promena podataka ispitnog roka") ?></h1>
+
+<?php 
+	$name = $form->get('Name');
+	$name->setAttribute('placeholder', 'Naziv ispitnog roka ...');
+	
+	$description = $form->get('Description');
+	$description->setAttribute('placeholder', 'Kratak opis ...');
+	
+	$year = $form->get('Year');
+	$year->setAttribute('placeholder', 'Školska godina ...');
+	
+	$datum_pocetka = $form->get('DateBeginning');
+	$datum_zavrsetka = $form->get('DateEnding');
+
+	
+	$submit = $form->get('submit');
+	$submit->setAttribute('class', 'btn btn-primary');
+	
+	$form->setAttribute('action', $this->url('rokovi', ['action' => 'add', 'id' => $id]));
+	
+	$form->prepare();
+	
+	echo $this->form()->openTag($form);
+?>
+
+<div class="form-group">
+    <?php echo $this->formLabel($name) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($name);?>
+        <?php echo $this->formElementErrors()->render($name, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($description) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($description);?>
+        <?php echo $this->formElementErrors()->render($description, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($year) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($year);?>
+        <?php echo $this->formElementErrors()->render($year, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($datum_pocetka) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($datum_pocetka);?>
+        <?php echo $this->formElementErrors()->render($datum_pocetka, ['class' => 'help-block']) ?>
+    </div>
+</div>
+
+<div class='form-group'>
+    <?php echo $this->formLabel($datum_zavrsetka) ?>
+    <div class='col-xs-4'>
+        <?php echo $this->formElement($datum_zavrsetka);?>
+        <?php echo $this->formElementErrors()->render($datum_zavrsetka, ['class' => 'help-block']) ?>
+    </div>
+</div>
+<div class="form-group" >
+	<div class="col-xs-offset-2 col-xs-4">
+        <?php echo $this->formSubmit($submit) ?>
+        <a href="<?php echo $this->url('rokovi')?>" class="btn btn-default">Nazad</a>
+    </div>
+</div>
+<?php 
+    echo $this->formHidden($form->get('Id'));
+    echo $this->form()->closeTag();    
+?>
