@@ -12,8 +12,8 @@ $count = $rokovi->count();
 <table class="table table-striped" id="mainTable">
 	<thead>
 		<tr class="success">
+			<th>R.br.</th>
 			<th>Naziv</th>
-			<th>Opis</th>
 			<th>Školska godina</th>
 			<th>Počinje</th>
 			<th>Završava se</th>
@@ -23,8 +23,8 @@ $count = $rokovi->count();
 	<tbody>
 	<?php foreach($rokovi as $rok): ?>
 	<tr>
+		<td><?php echo $rok->Id ?></td>
 		<td><?php echo $rok->Name ?></td>
-		<td><?php echo $rok->Description ?></td>
 		<td><?php echo $rok->Year ?></td>
 		<td><?php echo $rok->DateBeginning ?></td>
 		<td><?php echo $rok->DateEnding ?></td>
