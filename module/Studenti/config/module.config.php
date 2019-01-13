@@ -8,6 +8,7 @@ use Studenti\Controller\AjaxController;
 use Zend\Router\Http\Literal;
 use Studenti\Controller\IndexController;
 use Studenti\Controller\CoursesController;
+use Studenti\Controller\RokoviController;
 
 return [
     'controllers' => [
@@ -71,6 +72,21 @@ return [
                     ]
                 ]
             ],
+        		'rokovi' => [
+        				'type' => Segment::class,
+        				'options' => [
+        						'route' => '/rokovi[/:action[/:id]]',
+        						'constraints' => [
+        								'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+        								'id' => '[0-9]*',
+        								
+        						],
+        						'defaults' => [
+        								'controller' => RokoviController::class,
+        								'action' => 'index',
+        						]
+        				]
+        		],
             'ajax' => [
                 'type' => Segment::class,
                 'options' => [

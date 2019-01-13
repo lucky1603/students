@@ -20,6 +20,10 @@ use Studenti\Controller\AjaxController;
 use Studenti\Controller\IndexController;
 use Studenti\Model\KursModel;
 use Studenti\Model\SubjectModel;
+use Studenti\Model\RokTabela;
+use Studenti\Model\Rok;
+use Studenti\Controller\RokoviController;
+use Studenti\Form\RokForm;
 
 class Module implements ConfigProviderInterface
 {
@@ -54,6 +58,16 @@ class Module implements ConfigProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new Kurs());
                     return new TableGateway('kursevi', $dbAdapter, null, $resultSetPrototype);
                 },
+                Model\RokTableGateway::class => function($sm) {
+                	$dbAdapter = $sm->get(AdapterInterface::class);
+                	$resultSetPrototype = new ResultSet();
+                	$resultSetPrototype->setArrayObjectPrototype(new Rok());
+                	return new TableGateway('rokovi', $dbAdapter, null, $resultSetPrototype);
+                },
+                RokTabela::class => function($sm) {
+                	$tableGateway = $sm->get(Model\RokTableGateway::class);
+                	return new RokTabela($tableGateway);
+                },
                 StudentsTable::class => function($sm) {
                     $tableGateway = $sm->get(Model\StudentsTableGateway::class);
                     return new StudentsTable($tableGateway);
@@ -74,6 +88,9 @@ class Module implements ConfigProviderInterface
                 /* Forme */
                 KursForm::class => function($sm) {
                     return new KursForm("KursForm", ['service_manager' => $sm]);
+                },
+                RokForm::class => function($sm) {
+                	return new RokForm("RokForm", ['service_manager' => $sm]);
                 }
                 
             ]  
@@ -98,6 +115,9 @@ class Module implements ConfigProviderInterface
                 }, 
                 IndexController::class => function($container) {
                     return new IndexController($container);
+                },
+                RokoviController::class => function($container) {
+                	return new RokoviController($container);
                 }
              ],
         ];
