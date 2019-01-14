@@ -128,7 +128,7 @@ class KursForm extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Kolokvijum 1 (poeni)',
+                'label' => 'Poeni',
                 'label_attributes' => [
                     'class' => 'control-label',
                 ]
@@ -137,7 +137,7 @@ class KursForm extends Form {
         
         /* Datum prvojg kolokvijuma */
         $kolokvijum1Date = new \Zend\Form\Element\Date('kolokvijum_1_datum');
-        $kolokvijum1Date->setLabel("Kolokvijum 1 Datum");
+        $kolokvijum1Date->setLabel("Datum");
         $kolokvijum1Date->setLabelAttributes([
             'class' => 'control-label',
         ]);
@@ -160,7 +160,7 @@ class KursForm extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Kolokvijum 2 (poeni)',
+                'label' => 'Poeni',
                 'label_attributes' => [
                     'class' => 'control-label',
                 ]
@@ -169,7 +169,7 @@ class KursForm extends Form {
         
         /* Datum drugog kolokvijuma */
         $kolokvijum2Date = new \Zend\Form\Element\Date('kolokvijum_2_datum');
-        $kolokvijum2Date->setLabel("Kolokvijum 2 Datum");
+        $kolokvijum2Date->setLabel("Datum");
         $kolokvijum2Date->setLabelAttributes([
             'class' => 'control-label',
         ]);
@@ -185,7 +185,7 @@ class KursForm extends Form {
         
         /* Datum pismenog ispita */
         $pismeniDatum = new \Zend\Form\Element\Date('pismeni_datum');
-        $pismeniDatum->setLabel("Datum pismenog");
+        $pismeniDatum->setLabel("Datum");
         $pismeniDatum->setLabelAttributes([
             'class' => 'control-label',
         ]);
@@ -207,7 +207,7 @@ class KursForm extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Pismeni ispit (poeni)',
+                'label' => 'Poeni',
                 'label_attributes' => [
                     'class' => 'control-label',
                 ]
@@ -216,7 +216,7 @@ class KursForm extends Form {
         
         /* Datum usmenog ispita */
         $usmeniDatum = new \Zend\Form\Element\Date('usmeni_datum');
-        $usmeniDatum->setLabel("Datum usmenog");
+        $usmeniDatum->setLabel("Datum");
         $usmeniDatum->setLabelAttributes([
             'class' => 'control-label',
         ]);
@@ -239,7 +239,7 @@ class KursForm extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Usmeni ispit (poeni)',
+                'label' => 'Poeni',
                 'label_attributes' => [
                     'class' => 'control-label',
                 ]

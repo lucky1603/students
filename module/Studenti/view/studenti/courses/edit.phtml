@@ -112,36 +112,39 @@ $this->headTitle($title);
 </div>
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-3">
 		<div class="panel panel-default">
-			<div class="panel-heading">KOLOKVIJUMI</div>
+			<div class="panel-heading">KOLOKVIJUM I</div>
 			<div class="panel-body">
-				<div class="col-xs-6">
-					<?php echo $this->formLabel($kolokvijum_1_datum)?>
-					<?php echo $this->formElement($kolokvijum_1_datum);?>
-		            <?php echo $this->formElementErrors()->render($kolokvijum_1_datum, ['class' => 'help-block']) ?>
-			            		       
-			        <?php echo $this->formLabel($kolokvijum_1_poeni) ?>		        
-		            <?php echo $this->formElement($kolokvijum_1_poeni);?>
-		            <?php echo $this->formElementErrors()->render($kolokvijum_1_poeni, ['class' => 'help-block']) ?>
-		        </div>
-		        <div class="col-xs-6">
-			        <?php echo $this->formLabel($kolokvijum_2_datum) ?>		        
-		            <?php echo $this->formElement($kolokvijum_2_datum);?>
-		            <?php echo $this->formElementErrors()->render($kolokvijum_2_datum, ['class' => 'help-block']) ?>
-			        
-			        <?php echo $this->formLabel($kolokvijum_2_poeni) ?>		        
-		            <?php echo $this->formElement($kolokvijum_2_poeni);?>
-		            <?php echo $this->formElementErrors()->render($kolokvijum_2_poeni, ['class' => 'help-block']) ?>
-		        </div>
+				<?php echo $this->formLabel($kolokvijum_1_datum)?>
+				<?php echo $this->formElement($kolokvijum_1_datum);?>
+	            <?php echo $this->formElementErrors()->render($kolokvijum_1_datum, ['class' => 'help-block']) ?>
+		            		       
+		        <?php echo $this->formLabel($kolokvijum_1_poeni) ?>		        
+	            <?php echo $this->formElement($kolokvijum_1_poeni);?>
+	            <?php echo $this->formElementErrors()->render($kolokvijum_1_poeni, ['class' => 'help-block']) ?>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-3">
 		<div class="panel panel-default">
-			<div class='panel-heading'>ISPITI</div>
+			<div class="panel-heading">KOLOKVIJUM II</div>
+			<div class="panel-body">				
+		        <?php echo $this->formLabel($kolokvijum_2_datum) ?>		        
+	            <?php echo $this->formElement($kolokvijum_2_datum);?>
+	            <?php echo $this->formElementErrors()->render($kolokvijum_2_datum, ['class' => 'help-block']) ?>
+		        
+		        <?php echo $this->formLabel($kolokvijum_2_poeni) ?>		        
+	            <?php echo $this->formElement($kolokvijum_2_poeni);?>
+	            <?php echo $this->formElementErrors()->render($kolokvijum_2_poeni, ['class' => 'help-block']) ?>		        
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="panel panel-default">
+			<div class='panel-heading'>PISMENI ISPIT</div>
 			<div class='panel-body'>
-				<div class="col-xs-6">
+				
 					<?php echo $this->formLabel($pismeni_datum) ?>	        
 		            <?php echo $this->formElement($pismeni_datum);?>
 		            <?php echo $this->formElementErrors()->render($pismeni_datum, ['class' => 'help-block']) ?>
@@ -149,16 +152,22 @@ $this->headTitle($title);
 			        <?php echo $this->formLabel($pismeni_poeni) ?>	        
 		            <?php echo $this->formElement($pismeni_poeni);?>
 		            <?php echo $this->formElementErrors()->render($pismeni_poeni, ['class' => 'help-block']) ?>
-		        </div>
-		        <div class="col-xs-6">
+		        
+		        
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="panel panel-default">
+			<div class='panel-heading'>USMENI ISPIT</div>
+			<div class='panel-body'>						       
 			        <?php echo $this->formLabel($usmeni_datum) ?>	        
 		            <?php echo $this->formElement($usmeni_datum);?>
 		            <?php echo $this->formElementErrors()->render($usmeni_datum, ['class' => 'help-block']) ?>
 			        
 			        <?php echo $this->formLabel($usmeni_poeni) ?>	        
 		            <?php echo $this->formElement($usmeni_poeni);?>
-		            <?php echo $this->formElementErrors()->render($usmeni_poeni, ['class' => 'help-block']) ?>	        
-		        </div>
+		            <?php echo $this->formElementErrors()->render($usmeni_poeni, ['class' => 'help-block']) ?>	        		        
 			</div>
 		</div>
 	</div>
