@@ -49,6 +49,7 @@ class KursTabela
         $data = [
             'student_id' => $kurs->student_id,
             'predmet_id' => $kurs->predmet_id,
+        	'aktivnost' => $kurs->aktivnost,
             'prisustvo' => $kurs->prisustvo,
             'broj_casova' => $kurs->broj_casova,
             'samostalni_zadaci' => $kurs->samostalni_zadaci,

@@ -27,7 +27,7 @@ $count = $students->count();
 		<td><?php echo $student->email ?></td>
 		<td><img src="<?php echo $student->image ?>" width="100" height="auto" /></td>
 		<td><a href="<?php echo $this->url('studenti', ['action' => 'editWithModel', 'id' => $student->id]) ?>">Promeni</a> | 
-		<a id="delete" href="<?php echo $this->url('studenti', ['action' => 'delete', 'id' => $student->id]) ?>">Izbrisi</a></td>
+		<a id="delete" href="<?php echo $this->url('studenti', ['action' => 'delete', 'id' => $student->id])?>" data-name="<?= $student->ime.' '.$student->prezime?>">Izbrisi</a></td>
 	</tr>
 	<?php endforeach; ?>
 	</tbody>
@@ -43,7 +43,7 @@ $count = $students->count();
 				</button>
 				<h4 class="modal-title">Brisanje studenta</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" id="message">
 				<p>Student će biti potpuno obrisan iz baze, bez mogućnosti povratka podataka. Da li ste sigurni?</p>
 			</div>
 			<div class="modal-footer">
@@ -58,6 +58,8 @@ $count = $students->count();
         $('#studentsTable').DataTable();
     	$('a#delete').on('click', function(e) {
                 e.preventDefault();
+                var id = $(e.target).data('name');
+                $('#myModal').find('#message').text("Student " + id + " će biti obrisan(a). Da li ste sigurni?");
                 path = $(e.target).attr('href');
                 //console.log(path);
                 $('#myModal').modal('show');

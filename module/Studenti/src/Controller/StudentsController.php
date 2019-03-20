@@ -185,7 +185,7 @@ class StudentsController extends AbstractActionController
             {
                 $studentModel->setId($id);
                 $session->studentModelData = $studentModel->getArrayCopy();
-            }
+            } 
         } else {
             $studentModel->setId($id);
             $session->studentModelData = $studentModel->getArrayCopy();
@@ -197,6 +197,7 @@ class StudentsController extends AbstractActionController
         $form->bind($studentModel->student);
         $request = $this->getRequest();
         $viewData = ['id' => $id, 'form' => $form, 'model' => $studentModel];
+        
         $viewModel = new ViewModel($viewData);
         $viewModel->setTemplate('/studenti/students/add-with-model');
         if(! $request->isPost())
@@ -316,13 +317,13 @@ class StudentsController extends AbstractActionController
                 
         $kurs = $studentModel->kursevi[$id - 1];
         $form = $this->serviceManager->get(KursForm::class);
-        $form->bind($kurs);
+        $form->bind($kurs);       
         
         $subjectModel = $this->serviceManager->get(SubjectModel::class);
         $subjectModel->setId($kurs->predmet_id);
         
         $request = $this->getRequest();
-        $viewData = ['id' => $id, 'model' => $studentModel, 'form' => $form, 'kurs' => $kurs, 'subject' => $subjectModel->subject];
+        $viewData = ['id' => $id, 'model' => $studentModel, 'form' => $form, 'kurs' => $kurs, 'subject' => $subjectModel->subject, 'nevalidan' => $kurs->nevalidan];
         $viewModel = new ViewModel($viewData);
         $viewModel->setTemplate('/studenti/students/add-course');
         if(! $request->isPost())
@@ -336,10 +337,13 @@ class StudentsController extends AbstractActionController
             \Zend\Debug\Debug::dump($form->getMessages());
             return $viewModel;
         }
-    
+           
+        $kursModel = $this->serviceManager->get(\Studenti\Model\KursModel::class);
+        $studentModel->kursevi[$id - 1]->nevalidan = $kursModel->isNotValid($studentModel->kursevi[$id - 1]);
+                
         //$studentModel->kursevi[$id-1] = $kurs;
         $session->studentModelData = $studentModel->getArrayCopy();
-        
+                
         return $this->redirect()->toUrl('/students/editWithModel/'.$studentModel->student->id.'#tab2');
     }
 }

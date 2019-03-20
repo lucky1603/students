@@ -58,18 +58,18 @@ class CoursesController extends AbstractActionController {
     	$courses = $studentModel->kursevi;
     	foreach($courses as $course)
     	{
-    		if($course->predmet_id == $subjectId)
-    		{
-    			$kurs = $course;
-    		}
+            if($course->predmet_id == $subjectId)
+            {
+                $kurs = $course;
+            }
     	}
     	
     	if(!isset($kurs))
-    		return $this->redirect()->toRoute(null);
+            return $this->redirect()->toRoute(null);
     	
     	$subjectsTable = $this->serviceManager->get(SubjectsTable::class);
     	if(!isset($subjectsTable))
-    		return $this->redirect()->toRoute(null);
+            return $this->redirect()->toRoute(null);
     	$subject = $subjectsTable->getSubject($subjectId);
     	
     	$form = $this->serviceManager->get(KursForm::class);
@@ -78,7 +78,7 @@ class CoursesController extends AbstractActionController {
     	$request = $this->getRequest();
     	if(! $request->isPost())
     	{
-    		return ['form' => $form, 'model' => $studentModel, 'subject' => $subject];
+            return ['form' => $form, 'model' => $studentModel, 'subject' => $subject, 'nevalidan' => $kurs->nevalidan];
     	}
     	
     	$data = $request->getPost();
@@ -87,7 +87,7 @@ class CoursesController extends AbstractActionController {
     	$form->setData($data);	
     	if(!$form->isValid())
     	{
-    		return ['form' => $form, 'model' => $studentModel, 'subject' => $subject];
+            return ['form' => $form, 'model' => $studentModel, 'subject' => $subject, 'nevalidan' => $kurs->nevalidan];
     	}
     	
     	$studentModel->save();

@@ -28,13 +28,15 @@ class StudentModel
     public function exchangeArray($data)
     {
         $this->student->exchangeArray($data);
-        $this->kursevi = [];
+        $this->kursevi = [];        
         if(isset($data['kursevi']))
         {
+            $kursModel = $this->serviceManager->get(KursModel::class);
             foreach ($data['kursevi'] as $kursData)
             {
                 $kurs = new Kurs();
                 $kurs->exchangeArray($kursData);
+                $kurs->nevalidan = $kursModel->isNotValid($kurs);
                 $this->kursevi[] = $kurs;
             }
         }
@@ -73,10 +75,12 @@ class StudentModel
         $statement = $sql->prepareStatementForSqlObject($select);
         $rows = $statement->execute();
         $this->kursevi = [];
+        $kursModel = $this->serviceManager->get(KursModel::class);
         foreach($rows as $row)
         {
             $kurs = new Kurs();
             $kurs->exchangeArray($row);
+            $kurs->nevalidan = $kursModel->isNotValid($kurs);
             $this->kursevi[] = $kurs;
         }
         

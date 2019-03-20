@@ -8,6 +8,7 @@ class Kurs implements InputFilterAwareInterface
     public $id;
     public $student_id;
     public $predmet_id;
+    public $aktivnost;
     public $prisustvo;
     public $broj_casova;
     public $samostalni_zadaci;
@@ -32,6 +33,8 @@ class Kurs implements InputFilterAwareInterface
     public $datum_pocetka;
     public $datum_okoncanja;
     public $skolska_godina;
+    public $nevalidan;
+    
     
     private $inputFilter;
     
@@ -41,6 +44,7 @@ class Kurs implements InputFilterAwareInterface
         $this->student_id = isset($data['student_id']) ? $data['student_id'] : null;
         $this->predmet_id = isset($data['predmet_id']) ? $data['predmet_id'] : null;
         $this->prisustvo = isset($data['prisustvo']) ? $data['prisustvo'] : null;
+        $this->aktivnost = isset($data['aktivnost']) ? $data['aktivnost'] : null;
         $this->broj_casova = isset($data['broj_casova']) ? $data['broj_casova'] : null;
         $this->samostalni_zadaci = isset($data['samostalni_zadaci']) ? $data['samostalni_zadaci'] : null;
         $this->kolokvijum_1_poeni = isset($data['kolokvijum_1_poeni']) ? $data['kolokvijum_1_poeni'] : null;
@@ -66,6 +70,7 @@ class Kurs implements InputFilterAwareInterface
         $this->datum_pocetka = isset($data['datum_pocetka']) ? $data['datum_pocetka'] : null;
         $this->datum_okoncanja = isset($data['datum_okoncanja']) ? $data['datum_okoncanja'] : null;
         $this->skolska_godina = isset($data['skolska_godina']) ? $data['skolska_godina'] : null;
+        $this->nevalidan = isset($data['nevalidan']) ? $data['nevalidan'] : null;
     }
     
     public function getArrayCopy()
@@ -74,6 +79,7 @@ class Kurs implements InputFilterAwareInterface
             'id' => $this->id,
             'student_id' => $this->student_id,
             'predmet_id' => $this->predmet_id,
+            'aktivnost' => $this->aktivnost,
             'prisustvo' => $this->prisustvo,
             'broj_casova' => $this->broj_casova,
             'samostalni_zadaci' => $this->samostalni_zadaci,
@@ -84,7 +90,7 @@ class Kurs implements InputFilterAwareInterface
             'pismeni_datum' => $this->pismeni_datum,
             'pismeni_poeni' => $this->pismeni_poeni,
             'usmeni_datum' => $this->usmeni_datum,
-        	'usmeni_poeni' => $this->usmeni_poeni,
+            'usmeni_poeni' => $this->usmeni_poeni,
             'poeni_ukupno_do_usmenog' => $this->poeni_ukupno_do_usmenog,
             'poeni_zbir' => $this->poeni_zbir,
             'ocena' => $this->ocena,
@@ -95,9 +101,10 @@ class Kurs implements InputFilterAwareInterface
             'prezimeStudenta' => $this->prezimeStudenta,
             'brojIndeksa' => $this->brojIndeksa,
             'sifraPredmeta' => $this->sifraPredmeta,
-        	'datum_pocetka' => $this->datum_pocetka,
-        	'datum_okoncanja' => $this->datum_okoncanja,
-        	'skolska_godina' => $this->skolska_godina,        	
+            'datum_pocetka' => $this->datum_pocetka,
+            'datum_okoncanja' => $this->datum_okoncanja,
+            'skolska_godina' => $this->skolska_godina,        	
+            'nevalidan' => $this->nevalidan,
         ];
     }
 
@@ -129,18 +136,18 @@ class Kurs implements InputFilterAwareInterface
         ]);
         
         $this->inputFilter->add([
-        		'name' => 'datum_pocetka',
-        		'required' => false,
+            'name' => 'datum_pocetka',
+            'required' => false,
         ]);
         
         $this->inputFilter->add([
-        	'name' => 'datum_okoncanja',
-        	'required' => false,
+            'name' => 'datum_okoncanja',
+            'required' => false,
         ]);
         
         $this->inputFilter->add([
-        		'name' => 'skolska_godina',
-        		'required' => false,
+            'name' => 'skolska_godina',
+            'required' => false,
         ]);
         
         
@@ -150,6 +157,8 @@ class Kurs implements InputFilterAwareInterface
     public function setInputFilter(\Zend\InputFilter\InputFilterInterface $inputFilter) {
         throw new \DomainException(sprintf('%s does not allow injection of alternate input filter', __CLASS__));
     }
+    
+    
 
 }
 

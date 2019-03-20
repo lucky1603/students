@@ -27,10 +27,10 @@ class SubjectModel
     
     public function setId($id, $full = false)
     {
+        $kursModel = $this->serviceManager->get(KursModel::class);
         $subjectsTable = $this->serviceManager->get(SubjectsTable::class);
         $this->subject = $subjectsTable->getSubject($id);
         
-        $kursModel = $this->serviceManager->get(KursModel::class);
         $this->colloquiaIAttended = $kursModel->getColloquiaI($id);
         $this->colloquiaIIAttended = $kursModel->getColloquiaII($id);
         $this->writtenPartAttended =    $kursModel->getWrittenPart($id);
@@ -44,7 +44,11 @@ class SubjectModel
         {
             $select = $this->sql->select();
             $select->from('kursevi')
-                    ->join('studenti', 'kursevi.student_id = studenti.id')
+                    ->join('studenti', 'kursevi.student_id = studenti.id', 
+                            ['StudentId' => 'id', 
+                             'BrojIndeksa' => 'broj_indeksa', 
+                             'Ime' => 'ime', 
+                             'Prezime' => 'prezime'])
                     ->where(['kursevi.predmet_id' => $id]);
             $statement = $this->sql->prepareStatementForSqlObject($select);
             $results = $statement->execute();
@@ -52,12 +56,13 @@ class SubjectModel
             {
 
                 foreach($results as $result)
-                {       
+                {                           
                     $student = [];
-                    $student['id'] = $result['id'];
-                    $student['broj_indeksa'] = $result['broj_indeksa'];
-                    $student['puno_ime'] = $result['ime'].' '.$result['prezime'];
+                    $student['id'] = $result['StudentId'];
+                    $student['broj_indeksa'] = $result['BrojIndeksa'];
+                    $student['puno_ime'] = $result['Ime'].' '.$result['Prezime'];
                     $student['prisustvo'] = $result['prisustvo'];
+                    $student['aktivnost'] = $result['aktivnost'];
                     $student['samostalni_zadaci'] = $result['samostalni_zadaci'];
                     $student['kolokvijum_1_datum'] = $result['kolokvijum_1_datum'];
                     $student['kolokvijum_1_poeni'] = $result['kolokvijum_1_poeni'];
@@ -70,9 +75,11 @@ class SubjectModel
                     $student['poeni_ukupno_do_usmenog'] = $result['poeni_ukupno_do_usmenog'];
                     $student['poeni_zbir'] = $result['poeni_zbir'];
                     $student['ocena'] = $result['ocena'];
-                    
+                    $student['nevalidan'] = $kursModel->isNotValidById($result['id']);
+                                        
                     $this->students[] = $student;
                 }
+                
             } 
 
         }

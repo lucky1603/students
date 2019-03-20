@@ -48,7 +48,7 @@ class KursForm extends Form {
         $selectStudent = new Select('student_id');
         $selectStudent->setLabel("Student");
         $selectStudent->setLabelAttributes([
-            'class' => 'col-xs-2 control-label',
+            'class' => 'col-sm-2 control-label',
         ]);
         $selectStudent->setValueOptions($studentOptions);
         $selectStudent->setAttribute('class', 'form-control');
@@ -75,6 +75,21 @@ class KursForm extends Form {
         $selectSubject->setAttribute('id', 'predmet_id');
         $this->add($selectSubject);
         
+        /* Aktivnost */
+        $this->add([
+            'name' => 'aktivnost',
+            'attributes' => [
+                'type' => 'text',
+                'class' => 'form-control',
+            ],
+            'options' => [
+                'label' => 'Aktivnost',
+                'label_attributes' => [
+                    'class' => 'col-sm-2 control-label',
+                ]
+            ]
+        ]);
+        
         /* Prisustvo */
         $this->add([
             'name' => 'prisustvo',
@@ -85,7 +100,7 @@ class KursForm extends Form {
             'options' => [
                 'label' => 'Prisustvo',
                 'label_attributes' => [
-                    'class' => 'col-xs-2 control-label',
+                    'class' => 'col-sm-2 control-label',
                 ]
             ]
         ]);
@@ -100,7 +115,7 @@ class KursForm extends Form {
             'options' => [
                 'label' => 'Broj časova',
                 'label_attributes' => [
-                    'class' => 'col-xs-2 control-label',
+                    'class' => 'col-sm-2 control-label',
                 ]
             ]
         ]);
@@ -115,7 +130,7 @@ class KursForm extends Form {
             'options' => [
                 'label' => 'Prisustvo',
                 'label_attributes' => [
-                    'class' => 'col-xs-2 control-label',
+                    'class' => 'col-sm-2 control-label',
                 ]
             ]
         ]);
@@ -256,7 +271,7 @@ class KursForm extends Form {
             'options' => [
                 'label' => 'Poeni do usmenog',
                 'label_attributes' => [
-                    'class' => 'col-xs-2 control-label',
+                    'class' => 'col-sm-2 control-label',
                 ]
             ]
         ]);
@@ -271,7 +286,7 @@ class KursForm extends Form {
             'options' => [
                 'label' => 'Zbir poena',
                 'label_attributes' => [
-                    'class' => 'col-xs-2 control-label',
+                    'class' => 'col-sm-2 control-label',
                 ]
             ]
         ]);
@@ -286,7 +301,7 @@ class KursForm extends Form {
             'options' => [
                 'label' => 'Ocena',
                 'label_attributes' => [
-                    'class' => 'col-xs-2 control-label',
+                    'class' => 'col-sm-2 control-label',
                 ]
             ]
         ]);
@@ -346,7 +361,7 @@ class KursForm extends Form {
         $skolska_godina = new Select('skolska_godina');
         $skolska_godina->setLabel("Skolska godina");
         $skolska_godina->setLabelAttributes([
-        		'class' => 'col-xs-2 control-label',
+        		'class' => 'col-sm-2 control-label',
         ]);
         $skolska_godina->setValueOptions([
         	'2018' => '2018',

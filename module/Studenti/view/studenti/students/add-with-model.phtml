@@ -118,7 +118,7 @@ $courses = $model->kursevi;
                             <?php $counter = 1 ?>
                             <?php foreach($courses as $course): ?>
                                 <tr>
-                                    <td><?= $course->sifraPredmeta ?></td>
+                                    <td><?php if($course->nevalidan == true):?><span class="glyphicon glyphicon-alert" style="color: red" title="Nevalidno stanje!"></span><?php endif;?> <?= $course->sifraPredmeta ?></td>
                                     <td><?php echo $course->imePredmeta ?></td>
                                     <td><?php echo $course->imeProfesora ?></td>
                                     <td><a href="<?php echo $this->url('studenti', ['action' => 'editCourse', 'id' => $counter ])?>" class="btn btn-default">Promeni podatke</a></td>
