@@ -121,7 +121,10 @@ $courses = $model->kursevi;
                                     <td><?php if($course->nevalidan == true):?><span class="glyphicon glyphicon-alert" style="color: red" title="Nevalidno stanje!"></span><?php endif;?> <?= $course->sifraPredmeta ?></td>
                                     <td><?php echo $course->imePredmeta ?></td>
                                     <td><?php echo $course->imeProfesora ?></td>
-                                    <td><a href="<?php echo $this->url('studenti', ['action' => 'editCourse', 'id' => $counter ])?>" class="btn btn-default">Promeni podatke</a></td>
+                                    <td> 
+                                        <a href="<?php echo $this->url('studenti', ['action' => 'editCourse', 'id' => $counter ])?>"><span class="glyphicon glyphicon-edit" style="color: lightseagreen" title="Promeni"></span>
+                                        <a id="delete" href="<?php echo $this->url('studenti', ['action' => 'deleteCourse', 'id' => $counter ])?>"  data-id="<?= $course->imePredmeta ?>"><span class="glyphicon glyphicon-trash" style="color: red" title="Obriši"></span>
+                                    </td>                                    
                                 </tr>
                                 <?php $counter ++; ?>
                             <?php endforeach; ?>
@@ -143,8 +146,30 @@ $courses = $model->kursevi;
     echo $this->form()->closeTag();    
 ?>
 
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Brisanje predmeta</h4>
+            </div>
+            <div class="modal-body" id="message">
+                <p>Predmet će biti potpuno obrisan iz baze, bez mogućnosti povratka podataka. Da li ste sigurni?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-confirm" data-dismiss="modal">Da</button>
+                <button type="button" class="btn btn-cancel" data-dismiss="modal">Ne</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 $(function() {	
+    
+    
     $('#imgUpload').change(function(evt) {
         console.log('changed');
         var simage = $('#imgUpload').serialize();
@@ -202,6 +227,19 @@ $(document).ready(function() {
         }
             
         window.location.href = href;
+    });
+    
+    $('a#delete').on('click', function(e) {
+        e.preventDefault();     
+        var element = $(e.target).parent();        
+        var name = $(element).data('id');
+        $('#myModal').find('#message').text("Predmet " + name + " će biti obrisan iz liste. Da li ste sigurni?");
+        path = $(element).attr('href');
+        $('#myModal').modal('show');
+    });
+
+    $('.btn-confirm').on('click', function(e) {        
+        window.location.href = path;
     });
 });
 

@@ -36,7 +36,7 @@ $this->headtitle($title);
     if(! isset($id))
         $form->setAttribute('action', $this->url('predmeti', ['action' => 'add']));
     else 
-        $form->setAttribute('action', $this->url('predmeti', ['action' => 'edit']));
+        $form->setAttribute('action', $this->url('predmeti', ['action' => 'edit', 'id' => $id]));
     
     $form->prepare();
     

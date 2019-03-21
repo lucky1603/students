@@ -107,5 +107,34 @@ class SubjectsController extends AbstractActionController
         
         return ['model' => $subjectModel];
     }
+    
+    public function deleteAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if(0 == $id)
+        {
+            return $this->redirect()->toRoute('predmeti');
+        }
+        
+        $table = $this->serviceManager->get(SubjectsTable::class);
+        $table->deleteSubject($id);
+        
+        return $this->redirect()->toRoute('predmeti');
+    }
+    
+    public function deleteWithModelAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if(0 == $id)
+        {
+            return $this->redirect()->toRoute('predmeti');
+        }
+        
+        $subjectModel = $this->serviceManager->get(SubjectModel::class);
+        $subjectModel->setId($id);
+        $subjectModel->delete();
+        
+        return $this->redirect()->toRoute('predmeti');
+    }
 }
 

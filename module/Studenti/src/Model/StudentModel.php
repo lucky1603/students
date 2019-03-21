@@ -92,6 +92,7 @@ class StudentModel
         $student_id = $studentsTable->saveStudent($this->student);
         
         $kurseviTabela = $this->serviceManager->get(KursTabela::class);
+        $kursKeys = [];
         foreach($this->kursevi as $kurs)
         {
             
@@ -99,9 +100,11 @@ class StudentModel
                 $kurs->student_id = $student_id;
             }
             
-            $kurseviTabela->saveKurs($kurs);
-            
+            $kursKeys[] = $kurseviTabela->saveKurs($kurs);             
         }
+        
+        // provera na izbrisane, obrisi u tabeli one koji nisu u trenutno clanovi array-a.
+        $kurseviTabela->deleteSurplus($student_id, $kursKeys);
     }
     
     public function delete() {
@@ -117,6 +120,12 @@ class StudentModel
         
         $this->student = new Student();
         $this->kursevi = [];
+    }
+    
+    public function deleteCourse(Kurs $kurs)
+    {
+        $index = array_search($kurs, $this->kursevi);
+        unset($this->kursevi[$index]);
     }
     
     public function addCourse(Kurs $kurs)

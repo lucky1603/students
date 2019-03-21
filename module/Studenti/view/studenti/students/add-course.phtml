@@ -18,6 +18,10 @@
     $aktivnost->setAttribute('class', 'form-control');
     $aktivnost->setAttribute('placeholder', 'Poeni na aktivnost...');
     
+    $samostalni_zadaci = $form->get('samostalni_zadaci');
+    $samostalni_zadaci->setAttribute('class', 'form-control');
+    $samostalni_zadaci->setAttribute('placeholder', 'Poeni za samostalni zatatak ...');
+    
     $prisustvo = $form->get('prisustvo');
     $prisustvo->setAttribute('class', 'form-control');
     $prisustvo->setAttribute('placeholder', 'Poeni na prisustvo...');
@@ -115,7 +119,7 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">PREDMET
-    <?php if($nevalidan == true):?>
+    <?php if(isset($nevalidan) && $nevalidan == true):?>
         <span style="color: red"> - ISTEKAO ROK ZA POLAGANJE ISPITA</span>
     <?php endif; ?>
     </div>
@@ -202,10 +206,10 @@
                 <?php echo $this->formElement($prisustvo);?>
                 <?php echo $this->formElementErrors()->render($prisustvo, ['class' => 'help-block']) ?>
             </div>
-            <?php echo $this->formLabel($poeni_ukupno_do_usmenog) ?>
+            <?php echo $this->formLabel($samostalni_zadaci) ?>
             <div class='col-sm-1'>
-                <?php echo $this->formElement($poeni_ukupno_do_usmenog);?>
-                <?php echo $this->formElementErrors()->render($poeni_ukupno_do_usmenog, ['class' => 'help-block']) ?>
+                <?php echo $this->formElement($samostalni_zadaci);?>
+                <?php echo $this->formElementErrors()->render($samostalni_zadaci, ['class' => 'help-block']) ?>
             </div>
             <?php echo $this->formLabel($poeni_zbir) ?>
             <div class='col-sm-1'>

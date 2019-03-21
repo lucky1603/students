@@ -84,4 +84,19 @@ class SubjectModel
 
         }
     }
+    
+    public function delete() {
+        $id = (int) $this->subject->id;
+        
+        $subjectsTable = $this->serviceManager->get(SubjectsTable::class);
+        $subjectsTable->deleteSubject($this->subject);
+        $kurseviTabela = new TableGateway('kursevi', $this->adapter);
+        $kurseviTabela->delete(['predmet_id' => $id]);
+        
+        unset($this->subject);
+        unset($this->students);
+        
+        $this->subject = new Subject();
+        $this->students = [];
+    }
 }

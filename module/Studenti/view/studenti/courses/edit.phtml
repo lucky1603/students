@@ -51,9 +51,9 @@ $this->headTitle($title);
     $usmeni_poeni->setAttribute('class', 'form-control');
     $usmeni_poeni->setAttribute('placeholder', 'Poeni na usmenom ...');
     
-    $poeni_ukupno_do_usmenog = $form->get('poeni_ukupno_do_usmenog');
-    $poeni_ukupno_do_usmenog->setAttribute('class', 'form-control');
-    $poeni_ukupno_do_usmenog->setAttribute('placeholder', 'Poeni ukupno do usmenog ...');
+    $samostalni_zadaci = $form->get('samostalni_zadaci');
+    $samostalni_zadaci->setAttribute('class', 'form-control');
+    $samostalni_zadaci->setAttribute('placeholder', 'Poeni za samostalni zatatak ...');
     
     $poeni_zbir = $form->get('poeni_zbir');
     $poeni_zbir->setAttribute('class', 'form-control');
@@ -188,10 +188,10 @@ $this->headTitle($title);
                 <?php echo $this->formElement($prisustvo);?>
                 <?php echo $this->formElementErrors()->render($prisustvo, ['class' => 'help-block']) ?>
             </div>
-             <?php echo $this->formLabel($poeni_ukupno_do_usmenog) ?>
+             <?php echo $this->formLabel($samostalni_zadaci) ?>
             <div class='col-sm-1'>
-                <?php echo $this->formElement($poeni_ukupno_do_usmenog);?>
-                <?php echo $this->formElementErrors()->render($poeni_ukupno_do_usmenog, ['class' => 'help-block']) ?>
+                <?php echo $this->formElement($samostalni_zadaci);?>
+                <?php echo $this->formElementErrors()->render($samostalni_zadaci, ['class' => 'help-block']) ?>
             </div>
             <?php echo $this->formLabel($poeni_zbir) ?>
             <div class='col-sm-1'>

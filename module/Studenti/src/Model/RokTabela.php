@@ -56,7 +56,7 @@ class RokTabela {
             $Id = (int) $rok->Id;
             if($Id == 0)
             {
-                $this->tableGateway->insert($data);
+                $test = $this->tableGateway->insert($data);
                 $rows = $this->tableGateway->getAdapter()->query('SELECT max(Id) FROM rokovi')->execute();
                 return $rows->current()["max(id)"];
             } else {

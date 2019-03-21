@@ -72,8 +72,11 @@ class KursTabela
         if(empty($kurs->id))
         {
             $this->tableGateway->insert($data);
+            $rows = $this->tableGateway->getAdapter()->query('SELECT MAX(id) FROM kursevi')->execute();
+            return $rows->current()["MAX(id)"];
         } else {
             $this->tableGateway->update($data, ['id' => $kurs->id]);
+            return $kurs->id;
         }                            
     }
     /**
@@ -94,6 +97,22 @@ class KursTabela
     public function fetch(Where $where)
     {
         return $this->tableGateway->select($where);
+    }
+    
+    /**
+     * Deletes all memebers of the table that are not contained in the array.
+     * @param type $keys
+     * @return type
+     */
+    public function deleteSurplus($student_id, $keys)
+    {        
+        $where = new Where();        
+        if(count($keys) > 0)
+        {            
+            $where->equalTo('student_id', $student_id)->AND->notIn('id', $keys);
+            $this->tableGateway->delete($where);
+        }
+                
     }
     
     

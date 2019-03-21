@@ -128,7 +128,7 @@ class KursForm extends Form {
                 'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Prisustvo',
+                'label' => 'Samostalni zadatak',
                 'label_attributes' => [
                     'class' => 'col-sm-2 control-label',
                 ]
