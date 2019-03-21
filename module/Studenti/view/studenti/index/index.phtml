@@ -15,21 +15,21 @@ $this->headTitle($title);
 <div class="row">
 <?php endif;?>
 <?php $subjectEntry = $SubjectData[$i]; ?>
-<div class="col-xs-4">
-	<div class="panel panel-default">
-		<a href="<?php echo $this->url('predmeti', ['action' => 'preview', 'id' => $subjectEntry['id']]) ?>">
-			<div class="panel-heading"><strong><?php echo $subjectEntry['sifra']?></strong> - <span class="zf-green"><?php echo $subjectEntry['ime'] ?></span></div>
-		</a>
-		<div class="panel-body">
-			<ul>
-				<li><span style="font-weight: 600">Upisano studenata:</span> <span class="zf-green"><?php echo $subjectEntry['totalStudents'] ?></span></li>
-				<li><span style="font-weight: 600">Kolokvijum 1 položen:</span> <span class="zf-green"><?php echo $subjectEntry['c1attended'] ?></span></li>
-				<li><span style="font-weight: 600">Kolokvijum 2 položen:</span> <span class="zf-green"><?php echo $subjectEntry['c2attended'] ?></span></li>
-				<li><span style="font-weight: 600">Pismeni položen:</span> <span class="zf-green"><?php echo $subjectEntry['writtenAttended'] ?></span></li>
-				<li><span style="font-weight: 600">Usmeni položen:</span> <span class="zf-green"><?php echo $subjectEntry['spokenAttended'] ?></span></li>
-			</ul>
-		</div>
-	</div>
+<div class="col-sm-4">
+    <div class="panel panel-default">
+        <a href="<?php echo $this->url('predmeti', ['action' => 'preview', 'id' => $subjectEntry['id']]) ?>">
+                <div class="panel-heading"><strong><?php echo $subjectEntry['sifra']?></strong> - <span class="zf-green"><?php echo $subjectEntry['ime'] ?></span></div>
+        </a>
+        <div class="panel-body">
+            <ul>
+                <li><span style="font-weight: 600">Upisano studenata:</span> <span class="zf-green"><?php echo $subjectEntry['totalStudents'] ?></span></li>
+                <li><span style="font-weight: 600">Kolokvijum 1 položen:</span> <span class="zf-green"><?php echo $subjectEntry['c1attended'] ?></span></li>
+                <li><span style="font-weight: 600">Kolokvijum 2 položen:</span> <span class="zf-green"><?php echo $subjectEntry['c2attended'] ?></span></li>
+                <li><span style="font-weight: 600">Pismeni položen:</span> <span class="zf-green"><?php echo $subjectEntry['writtenAttended'] ?></span></li>
+                <li><span style="font-weight: 600">Usmeni položen:</span> <span class="zf-green"><?php echo $subjectEntry['spokenAttended'] ?></span></li>
+            </ul>
+        </div>
+    </div>
 </div>
 <?php endfor;?>
 </div>
