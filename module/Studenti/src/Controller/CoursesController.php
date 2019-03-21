@@ -13,6 +13,7 @@ use Zend\ServiceManager\ServiceManager;
 use Studenti\Form\KursForm;
 use Studenti\Model\StudentModel;
 use Studenti\Model\SubjectsTable;
+use Studenti\Model\KursModel;
 
 /**
  * Description of CoursesController
@@ -56,11 +57,12 @@ class CoursesController extends AbstractActionController {
     	$studentModel = $this->serviceManager->get(StudentModel::class);
     	$studentModel->setId($studentId);
     	$courses = $studentModel->kursevi;
-    	foreach($courses as $course)
+    	foreach($courses as $key => $course)
     	{
             if($course->predmet_id == $subjectId)
-            {
+            {            	
                 $kurs = $course;
+                $kursId = $key;
             }
     	}
     	
@@ -89,6 +91,14 @@ class CoursesController extends AbstractActionController {
     	{
             return ['form' => $form, 'model' => $studentModel, 'subject' => $subject, 'nevalidan' => $kurs->nevalidan];
     	}
+    	
+    	if(isset($kursId))
+    	{
+    		$kursModel = $this->serviceManager->get(KursModel::class);
+    		$kurs = $kursModel->CorrectCourseEntries($kurs);
+    		$studentModel->kursevi[$kursId] = $kurs;
+    	}
+    	
     	
     	$studentModel->save();
     	

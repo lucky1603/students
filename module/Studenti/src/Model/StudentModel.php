@@ -100,6 +100,8 @@ class StudentModel
                 $kurs->student_id = $student_id;
             }
             
+            //\Zend\Debug\Debug::dump($kurs);
+            
             $kursKeys[] = $kurseviTabela->saveKurs($kurs);             
         }
         

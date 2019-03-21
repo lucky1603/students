@@ -11,6 +11,7 @@ use Studenti\Model\StudentModel;
 use Zend\Session\Container;
 use Studenti\Form\KursForm;
 use Studenti\Model\SubjectModel;
+use Studenti\Model\Kurs;
 
 class StudentsController extends AbstractActionController
 {
@@ -291,8 +292,10 @@ class StudentsController extends AbstractActionController
                 'model' => $studentModel,
             ];
         }
-               
-        $studentModel->addCourse($kurs);
+        
+        $noviKurs = $this->CorrectCourseEntries($kurs);
+        $studentModel->addCourse($noviKurs);
+                
         $session->studentModelData = $studentModel->getArrayCopy();
         
         if(isset($studentModel->student->id) && $studentModel->student->id != 0 )
@@ -301,6 +304,89 @@ class StudentsController extends AbstractActionController
         }
         
         return $this->redirect()->toUrl('/students/addWithModel/#tab2');
+    }
+    
+    private function CorrectCourseEntries(Kurs $kurs)
+    {
+    	$noviKurs = new Kurs();
+    	$noviKurs->exchangeArray($kurs->getArrayCopy());
+    	
+    	if($kurs->prisustvo == '')
+    	{
+    		$noviKurs->prisustvo = '0';
+    	}
+    	
+    	if($kurs->aktivnost == '')
+    	{
+    		$noviKurs->aktivnost = '0';
+    	}
+    	
+    	if($kurs->samostalni_zadaci == '')
+    	{
+    		$noviKurs->samostalni_zadaci= '0';
+    	}
+    	
+    	if($kurs->datum_pocetka == '')
+    	{
+    		$noviKurs->datum_pocetka = '0000-00-00';
+    	}
+    	
+    	if($kurs->datum_okoncanja == '')
+    	{
+    		$noviKurs->datum_okoncanja = '0000-00-00';
+    	}
+    	
+    	if($kurs->kolokvijum_1_datum == '')
+    	{
+    		$noviKurs->kolokvijum_1_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->kolokvijum_2_datum == '')
+    	{
+    		$noviKurs->kolokvijum_2_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->pismeni_datum == '')
+    	{
+    		$noviKurs->pismeni_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->usmeni_datum == '')
+    	{
+    		$noviKurs->usmeni_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->kolokvijum_1_poeni == '')
+    	{
+    		$noviKurs->kolokvijum_1_poeni= '0';
+    	}
+    	
+    	if($kurs->kolokvijum_2_poeni == '')
+    	{
+    		$noviKurs->kolokvijum_2_poeni= '0';
+    	}
+    	
+    	if($kurs->pismeni_poeni == '')
+    	{
+    		$noviKurs->pismeni_poeni = '0';
+    	}
+    	
+    	if($kurs->usmeni_poeni == '')
+    	{
+    		$noviKurs->usmeni_poeni= '0';
+    	}
+    	
+    	if($kurs->poeni_zbir == '')
+    	{
+    		$noviKurs->poeni_zbir = '0';
+    	}
+    	
+    	if($kurs->poeni_ukupno_do_usmenog == '')
+    	{
+    		$noviKurs->poeni_ukupno_do_usmenog = '0';
+    	}
+    	
+    	return $noviKurs;
     }
     
     public function editCourseAction()
@@ -337,7 +423,11 @@ class StudentsController extends AbstractActionController
             \Zend\Debug\Debug::dump($form->getMessages());
             return $viewModel;
         }
-           
+        
+        // Promena zbog toga sto je na Debian servervu zabranjeno da se unose prazane vrednosti u bazu.
+        $noviKurs = $this->CorrectCourseEntries($studentModel->kursevi[$id - 1]);
+        
+        $studentModel->kursevi[$id - 1] = $noviKurs;           
         $kursModel = $this->serviceManager->get(\Studenti\Model\KursModel::class);
         $studentModel->kursevi[$id - 1]->nevalidan = $kursModel->isNotValid($studentModel->kursevi[$id - 1]);
                 

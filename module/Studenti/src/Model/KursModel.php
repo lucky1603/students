@@ -147,5 +147,88 @@ class KursModel
         $kurs = $kursTabela->getKurs($kursId);
         return $this->isNotValid($kurs);
     }
+    
+    public function CorrectCourseEntries(Kurs $kurs)
+    {
+    	$noviKurs = new Kurs();
+    	$noviKurs->exchangeArray($kurs->getArrayCopy());
+    	
+    	if($kurs->prisustvo == '')
+    	{
+    		$noviKurs->prisustvo = '0';
+    	}
+    	
+    	if($kurs->aktivnost == '')
+    	{
+    		$noviKurs->aktivnost = '0';
+    	}
+    	
+    	if($kurs->samostalni_zadaci == '')
+    	{
+    		$noviKurs->samostalni_zadaci= '0';
+    	}
+    	
+    	if($kurs->datum_pocetka == '')
+    	{
+    		$noviKurs->datum_pocetka = '0000-00-00';
+    	}
+    	
+    	if($kurs->datum_okoncanja == '')
+    	{
+    		$noviKurs->datum_okoncanja = '0000-00-00';
+    	}
+    	
+    	if($kurs->kolokvijum_1_datum == '')
+    	{
+    		$noviKurs->kolokvijum_1_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->kolokvijum_2_datum == '')
+    	{
+    		$noviKurs->kolokvijum_2_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->pismeni_datum == '')
+    	{
+    		$noviKurs->pismeni_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->usmeni_datum == '')
+    	{
+    		$noviKurs->usmeni_datum= '0000-00-00';
+    	}
+    	
+    	if($kurs->kolokvijum_1_poeni == '')
+    	{
+    		$noviKurs->kolokvijum_1_poeni= '0';
+    	}
+    	
+    	if($kurs->kolokvijum_2_poeni == '')
+    	{
+    		$noviKurs->kolokvijum_2_poeni= '0';
+    	}
+    	
+    	if($kurs->pismeni_poeni == '')
+    	{
+    		$noviKurs->pismeni_poeni = '0';
+    	}
+    	
+    	if($kurs->usmeni_poeni == '')
+    	{
+    		$noviKurs->usmeni_poeni= '0';
+    	}
+    	
+    	if($kurs->poeni_zbir == '')
+    	{
+    		$noviKurs->poeni_zbir = '0';
+    	}
+    	
+    	if($kurs->poeni_ukupno_do_usmenog == '')
+    	{
+    		$noviKurs->poeni_ukupno_do_usmenog = '0';
+    	}
+    	
+    	return $noviKurs;
+    }
         
 }
