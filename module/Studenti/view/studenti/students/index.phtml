@@ -4,7 +4,7 @@ $this->headtitle($title);
 $count = $students->count();
 ?>
 
-<h1><?php echo $this->escapehtml($title) ?></h1>
+<h1 style="margin-bottom: 30px"><?php echo $this->escapehtml($title) ?></h1>
 
 <?php if($count == 0): ?>
 <p>Još uvek nema unesenih studenata. Da li biste možda uneli jednog ili više njih?</p>
@@ -33,7 +33,7 @@ $count = $students->count();
 	</tbody>
 </table>
 <?php endif; ?>
-<p><a class="btn btn-primary" href="<?php echo $this->url('studenti', ['action' => 'addWithModel'])?>">Dodaj novog studenta</a></p>
+<p style="margin-top: 20px"><a class="btn btn-primary" href="<?php echo $this->url('studenti', ['action' => 'addWithModel'])?>">Dodaj novog studenta</a></p>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

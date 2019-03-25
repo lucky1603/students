@@ -4,12 +4,12 @@ $this->headtitle($title);
 $count = $subjects->count();
 ?>
 
-<h1><?php echo $this->escapehtml($title) ?></h1>
+<h1 style="margin-bottom: 30px;"><?php echo $this->escapehtml($title) ?></h1>
 
 <?php if($count == 0): ?>
 <p>Još uvek nema unesenih predmeta. Da li biste možda uneli jednog ili više njih?</p>
 <?php else: ?>
-<table class="table table-striped" id="mainTable">
+<table class="table table-striped table-bordered" id="mainTable">
 	<thead>
             <tr class="success">
                 <th>Ime</th>
@@ -31,7 +31,7 @@ $count = $subjects->count();
 	</tbody>
 </table>
 
-<p><a class="btn btn-primary" href="<?php echo $this->url('predmeti', ['action' => 'add'])?>">Dodaj novi predmet >>></a></p>
+<p style="margin-top: 20px;"><a class="btn btn-primary" href="<?php echo $this->url('predmeti', ['action' => 'add'])?>">Dodaj novi predmet >>></a></p>
 
 
 <?php endif; ?>

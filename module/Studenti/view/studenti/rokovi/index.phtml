@@ -4,12 +4,12 @@ $this->headTitle($title);
 $count = $rokovi->count();
 ?>
 
-<h1><?php echo $this->escapehtml($title) ?></h1>
+<h1 style="margin-bottom: 30px"><?php echo $this->escapehtml($title) ?></h1>
 
 <?php if($count == 0): ?>
 <p>Još uvek nema unesenih ispitnih rokova. Da li biste možda uneli jednog ili više njih?</p>
 <?php else: ?>
-<table class="table table-striped" id="mainTable">
+<table class="table table-striped table-bordered" id="mainTable">
     <thead>
         <tr class="success">
             <th>R.br.</th>
@@ -36,7 +36,7 @@ $count = $rokovi->count();
     </tbody>
 </table>
 <?php endif; ?>
-<p><a class="btn btn-primary" href="<?php echo $this->url('rokovi', ['action' => 'add'])?>">Dodaj novi rok >>></a></p>
+<p style="margin-top: 20px"><a class="btn btn-primary" href="<?php echo $this->url('rokovi', ['action' => 'add'])?>">Dodaj novi rok >>></a></p>
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" role="document">

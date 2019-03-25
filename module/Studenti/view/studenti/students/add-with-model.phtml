@@ -122,7 +122,7 @@ $courses = $model->kursevi;
                                     <td><?php echo $course->imePredmeta ?></td>
                                     <td><?php echo $course->imeProfesora ?></td>
                                     <td> 
-                                        <a href="<?php echo $this->url('studenti', ['action' => 'editCourse', 'id' => $counter ])?>"><span class="glyphicon glyphicon-edit" style="color: lightseagreen" title="Promeni"></span>
+                                        <a href="<?php echo $this->url('studenti', ['action' => 'editCourse', 'id' => $counter ])?>"><span class="glyphicon glyphicon-edit" style="color: lightseagreen" title="Promeni"></span>&nbsp;&nbsp;          
                                         <a id="delete" href="<?php echo $this->url('studenti', ['action' => 'deleteCourse', 'id' => $counter ])?>"  data-id="<?= $course->imePredmeta ?>"><span class="glyphicon glyphicon-trash" style="color: red" title="Obriši"></span>
                                     </td>                                    
                                 </tr>
